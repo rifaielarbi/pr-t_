@@ -58,7 +58,7 @@ public class AchatIMPL implements AchatService {
 
             // Comparaison de la date d'expiration avec la date actuelle
             if (abonnement != null && document != null   && abonnement.getDate_expiration() != null && abonnement.getDate_expiration().after(currentDate)) {
-                if (document.getQuantite() > 0 && document.getPrix() < abonnement.getSolde()) {
+                if (document.getQuantite() > 0 && document.getPrix() <= abonnement.getSolde()) {
                     // Mise à jour des quantités et du solde
                     abonnement.setSolde(abonnement.getSolde() - document.getPrix());
                     document.setQuantite_disponible(document.getQuantite_disponible() - 1);

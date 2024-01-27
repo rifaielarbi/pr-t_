@@ -30,7 +30,15 @@ public class UserService implements UserServiceImp {
     private UserRepo userrepo;
 
     @Autowired
+    private DocumentRepo documentrepo;
+    @Autowired
     private LecteurRepo lecteurRepo;
+    @Autowired
+    private LivreRepo livreRepo;
+    @Autowired
+    private DocumentRepo documentRepo;
+    @Autowired
+    private MicroFilmRepo microFilmRepo;
 
     @Autowired
     private EmployeRepo employeRepo;
@@ -397,9 +405,85 @@ public class UserService implements UserServiceImp {
         user3.setPassword(new BCryptPasswordEncoder().encode("12345678"));
         userrepo.save(user3);
 
+        Document document1 = new Document();
+        document1.setDocument_id(1);
+        document1.setTitre("L'Île mystérieuse");
+        document1.setPrix(200L);
+        document1.setType("Livre");
+        document1.setEmpruntable(false);
+        document1.setQuantite(50);
+        document1.setQuantite_disponible(40);
+        document1.setEmpruntable(true);
+        documentRepo.save(document1);
+
+        Document document2 = new Document();
+        document2.setDocument_id(2);
+        document2.setTitre("Orgueil et préjugés");
+        document2.setPrix(300L);
+        document2.setType("Livre");
+        document2.setEmpruntable(false);
+        document2.setQuantite(20);
+        document2.setQuantite_disponible(10);
+        document2.setEmpruntable(true);
+        documentRepo.save(document2);
+
+        Document document3 = new Document();
+        document3.setDocument_id(3);
+        document3.setTitre("Les Hauts de Hurle-Vent");
+        document3.setPrix(500L);
+        document3.setType("Livre");
+        document3.setEmpruntable(false);
+        document3.setQuantite(100);
+        document3.setQuantite_disponible(50);
+        document3.setEmpruntable(true);
+        documentRepo.save(document3);
+
+        Livre livre = new Livre();
+        livre.setDocument(document1);
+        livre.setAuteur("Jule Vernes");
+        livre.setLivre_id(1);
+        livreRepo.save(livre);
+
+        Livre livre2 = new Livre();
+        livre2.setDocument(document2);
+        livre2.setAuteur("Jane Austen");
+        livre2.setLivre_id(2);
+        livreRepo.save(livre2);
+
+        Livre livre3 = new Livre();
+        livre3.setDocument(document3);
+        livre3.setAuteur("Emily Brontë");
+        livre3.setLivre_id(3);
+        livreRepo.save(livre3);
+
+
         Lecteur lecteur = new Lecteur();
         lecteur.setUser(user3);
         lecteurRepo.save(lecteur);
+
+        Document document4 = new Document();
+        document4.setDocument_id(4);
+        document4.setTitre("DAWN OF THE MOROCCAN FITNESS");
+        document4.setPrix(500L);
+        document4.setType("microfilm");
+        document4.setEmpruntable(false);
+        document4.setQuantite(100);
+        document4.setQuantite_disponible(50);
+        document4.setEmpruntable(true);
+        document4.setConsultable(true);
+        documentRepo.save(document4);
+
+        MicroFilm microFilm = new MicroFilm();
+        microFilm.setDocument(document4);
+        microFilm.setMicro_id(4);
+        microFilmRepo.save(microFilm);
+
+
+
+
+
+
+
 
         Abonnement abonnement =  new Abonnement();
         abonnement.setSolde(1000L);
@@ -415,13 +499,14 @@ public class UserService implements UserServiceImp {
 
 
 
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= 3; i++) {
             Poste poste = new Poste();
             poste.setNumero(i);
             poste.setEtat(true);
-
             posteRepo.save(poste);
         }
+
+
 
         }
 

@@ -30,6 +30,7 @@ public class Consult {
 
 
 
+
     @ManyToOne
     //@JoinColumn(name = "abonnement_id", referencedColumnName = "id")
     @JoinColumn(name = "abonnement_id")

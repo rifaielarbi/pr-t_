@@ -53,32 +53,37 @@ export default {
     };
 
     const getDocumentImage = (post) => {
-  if (post.etat) {
-    return post.document && post.document.image ? post.document.image : '../../src/assets/photos/poston.png';
-  } else {
-    return '../../src/assets/photos/poston1.png';
-  }
-};
-
-
-
-    const getDocumentAlt = (post) => {
-      if (post.etat && post.document) {
-        return post.document.titre ? post.document.titre : 'Document Off';
+          if (post.etat) {
+            return post.document && post.document.image ? post.document.image : '../../src/assets/photos/poston.png';
+          } else {
+            return '../../src/assets/photos/1.png';
+          }
+      if (post1.etat) {
+        return post1.document && post1.document.image ? post1.document.image : '../../src/assets/photos/poston.png';
       } else {
-        return 'Document Off';
+        return '../../src/assets/photos/poston1.png';
       }
-    };
 
-    onMounted(fetchPosts);
+          };
 
-    return {
-      posts,
-      getDocumentImage,
-      getDocumentAlt,
-    };
-  },
-};
+
+          const getDocumentAlt = (post) => {
+            if (post.etat && post.document) {
+              return post.document.titre ? post.document.titre : 'Document Off';
+            } else {
+              return 'Document Off';
+            }
+          };
+
+          onMounted(fetchPosts);
+
+          return {
+            posts,
+            getDocumentImage,
+            getDocumentAlt,
+          };
+        },
+        };
 </script>
 
 

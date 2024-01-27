@@ -35,8 +35,8 @@ public class MailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(fromMail);
             helper.setTo(toEmail);
-            helper.setSubject("Subject of the Email"); // Replace with your subject
-            helper.setText("Body of the Email"); // Replace with your email body
+            helper.setSubject("Carte d'abonnement"); // Replace with your subject
+            helper.setText("Ci-joint votre carte d'abonnement:"); // Replace with your email body
 
             // Add the PDF as an attachment
             helper.addAttachment("document.pdf", new ByteArrayResource(pdfBytes));

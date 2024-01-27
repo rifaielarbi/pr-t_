@@ -33,8 +33,11 @@ public class PdfGenerationService {
         String photoUrl = "https://cdn-icons-png.flaticon.com/512/3177/3177440.png";
         byte[] userPhoto = downloadUserPhoto(photoUrl);
 
+        float mmToPoints = 2.834f;
+        Rectangle cardSize = new Rectangle(85.60f * mmToPoints, 53.98f * mmToPoints);
+        Document document = new Document(cardSize, 36, 36, 20, 36);
         // Créer un nouveau document PDF
-        Document document = new Document();
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PdfWriter.getInstance(document, outputStream);
 
@@ -42,38 +45,48 @@ public class PdfGenerationService {
         document.open();
 
         // Ajouter le contenu au document
-        Paragraph title = new Paragraph("User Card", FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLD));
-        title.setAlignment(Element.ALIGN_CENTER); // Aligner le titre au centre
+        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA, 9, Font.BOLD, new BaseColor(0, 102, 204));
+        Paragraph title = new Paragraph("CARTE D'ABONNEMENT: \n ", titleFont);
+        title.setAlignment(Element.ALIGN_LEFT);
         document.add(title);
-
         // Ajouter un espacement après le titre
-        document.add(new Paragraph("\n"));
+
+// Ajouter un espacement après le titre
+        document.add(new Paragraph());
         if (userPhoto != null && userPhoto.length > 0) {
             Image image = Image.getInstance(userPhoto);
-            image.setAlignment(Element.ALIGN_RIGHT); // Aligner l'image au centre
-            image.scaleToFit(100, 100); // Redimensionner l'image si nécessaire
+            image.scaleToFit(50, 50); // Redimensionner l'image si nécessaire
+
+            // Determine the right margin position for the image
+            float xPosition = document.getPageSize().getWidth() - image.getScaledWidth() - document.rightMargin();
+            float yPosition = document.getPageSize().getHeight() - image.getScaledHeight() - document.topMargin();
+
+            // Set the absolute position of the image
+            image.setAbsolutePosition(xPosition, yPosition);
+
+            // Add the image to the document
             document.add(image);
         }
 
+
         // Ajouter les informations de l'utilisateur au document
         Paragraph userInfo = new Paragraph();
-        userInfo.add(new Chunk("Nom : ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
-        userInfo.add(user.getLastname() + "\n");
-        userInfo.add(new Chunk("Prénom : ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
-        userInfo.add(user.getFirstname() + "\n");
-        userInfo.add(new Chunk("E-mail : ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
-        userInfo.add(user.getEmail() + "\n");
-        userInfo.add(new Chunk("Nom d'utilisateur : ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
-        userInfo.add(user.getUsername() + "\n");
-        userInfo.add(new Chunk("Date d'inscription : ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
-        userInfo.add(abonnement.getDate_inscription() + "\n");
-        userInfo.add(new Chunk("Date d'expiration : ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
-        userInfo.add(abonnement.getDate_expiration()+ "\n");
+        Font infoFont = FontFactory.getFont(FontFactory.HELVETICA, 6, Font.BOLD, new BaseColor(51, 51, 51));
+        Font infoFont2 = FontFactory.getFont(FontFactory.HELVETICA, 6, Font.BOLD, new BaseColor(0, 102, 204));
+
+        userInfo.add(new Chunk("Votre ID : ", infoFont2));
+        userInfo.add(new Chunk(user.getId() + "\n", infoFont));
+        userInfo.add(new Chunk("Nom d'utilisateur : ", infoFont2));
+        userInfo.add(new Chunk(user.getUsername() + "\n", infoFont));
+        userInfo.add(new Chunk("Date d'inscription : ", infoFont2));
+        userInfo.add(new Chunk(abonnement.getDate_inscription() + "\n", infoFont));
+        userInfo.add(new Chunk("Date d'expiration : ", infoFont2));
+        userInfo.add(new Chunk(abonnement.getDate_expiration() + "\n", infoFont));
 
         document.add(userInfo);
 
         // Ajouter un espacement après les informations de l'utilisateur
-        document.add(new Paragraph("\n"));
+        // document.add(new Paragraph("\n"));
 
         // Ajouter la photo de l'utilisateur au document
 

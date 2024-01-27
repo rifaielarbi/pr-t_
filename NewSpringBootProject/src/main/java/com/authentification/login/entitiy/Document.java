@@ -45,4 +45,6 @@ public class Document {
         @Column(name = "quantite_disponible")
         private Integer quantite_disponible;
 
+
+
 }
